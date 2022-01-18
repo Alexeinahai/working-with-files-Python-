@@ -1,0 +1,47 @@
+prior_file = open('d:\!VypiskaPrior\Vypiska.txt', 'r', encoding='866')
+counts_file = open('d:\!VypiskaPrior\Vypiska_IB.txt', 'w')
+docDate = ''
+numDoc = ''
+oprDoc = ''
+codDoc = ''
+unnDoc = ''
+naznDoc = ''
+nazn2Doc = ''
+korrDoc = ''
+sym_count = ''
+
+for i_lines in prior_file:
+    if i_lines[1:9] == 'DocDate=':
+        docDate = i_lines[9:-2] + '*'
+    if i_lines[1:5] == 'Opr=':
+        oprDoc = i_lines[5:-2] + '*'
+    if i_lines[1:8] == 'UNNRec=':
+        unnDoc = i_lines[8:-2] + '*'
+    if i_lines[1:6] == 'Nazn=':
+        naznDoc = i_lines[6:-2] + '*'
+    if i_lines[1:7] == 'Nazn2=':
+        nazn2Doc += i_lines[7:-2] + '*'
+    if i_lines[1:9] == 'KorName=':
+        korrDoc = i_lines[9:-2] + '*'
+    if i_lines[1:5] == 'Num=':
+        sym_count += '\n' + '***' + i_lines[5:-2] + '*'
+        numDoc = i_lines[5:-2]
+    if i_lines[1:5] == 'Cod=':
+        sym_count += i_lines[6:-2] + '*'
+        codDoc = i_lines[6:-2] + '*'
+    if i_lines[1:5] == 'Acc=':
+        sym_count += i_lines[5:-2] + '****' + docDate + numDoc + '*' + oprDoc + codDoc
+    if i_lines[1:5] == 'Acc=':
+        sym_count += i_lines[5:-2] + '*'
+    if i_lines[1:4] == 'Db=':
+        sym_count += i_lines[4:-2] + '*'
+    if i_lines[1:8] == 'Credit=':
+        sym_count += i_lines[8:-2] + '*' + unnDoc + naznDoc + '*' + korrDoc
+
+
+counts_file.write(sym_count[1:])
+print(sym_count)
+prior_file.close()
+counts_file.close()
+
+
